@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Intentionally Vulnerable College Test API",
+    "description": "Target API for Security Scanner Testing (OWASP Top 10 API Security)",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8888",
+      "description": "Local Test Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Public Health Check",
+        "responses": {
+          "200": {
+            "description": "API is operational"
+          }
+        }
+      }
+    },
+    "/api/users/search": {
+      "get": {
+        "summary": "Search user accounts (Vulnerable to SQLi)",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results"
+          }
+        }
+      }
+    },
+    "/api/comments": {
+      "post": {
+        "summary": "Post user comment (Vulnerable to XSS)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "comment": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "comment"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Comment added"
+          }
+        }
+      }
+    },
+    "/api/admin/dashboard": {
+      "get": {
+        "summary": "Administrative metrics (Vulnerable to Broken Authentication)",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Admin data"
+          }
+        }
+      }
+    },
+    "/api/profile/{user_id}": {
+      "get": {
+        "summary": "Fetch User Profile by ID (Vulnerable to IDOR)",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User profile"
+          }
+        }
+      }
+    },
+    "/api/login": {
+      "post": {
+        "summary": "User authentication endpoint (Vulnerable to Missing Rate Limiting)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication token"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>API Sentinel | AI Risk Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">AI-DRIVEN ADAPTIVE API SECURITY SCANNER</div>
+        <h1> API Sentinel</h1>
+        <p>Risk Intelligence Console</p>
+      </div>
+      <div class="actions">
+        <button id="reloadBtn" class="secondary">↻ Reload</button>
+        <button id="pdfBtn">Generate PDF Report</button>
+      </div>
+    </header>
+
+    <section class="targetbar">
+      <label for="targetUrl">Target API</label>
+      <input id="targetUrl" value="http://127.0.0.1:5000" />
+      <button id="scanBtn">Run Full Scan</button>
+    </section>
+
+    <div id="status" class="status info">Loading latest assessment...</div>
+    <section id="liveBox" class="live-box"><div class="row"><strong id="livePhase">Ready</strong><span id="liveMessage">Live scan progress will appear here.</span></div><div class="live-progress"><div id="liveProgress"></div></div></section>
+
+    <section class="metrics">
+      <div class="metric"><span>Risk Score</span><strong id="score">—</strong></div>
+      <div class="metric"><span>Findings</span><strong id="findings">—</strong></div>
+      <div class="metric"><span>Critical</span><strong id="critical">—</strong></div>
+      <div class="metric"><span>High</span><strong id="high">—</strong></div>
+      <div class="metric"><span>Medium</span><strong id="medium">—</strong></div>
+    </section>
+
+    <section class="risk-card">
+      <div class="row"><span>Overall API Risk</span><strong id="riskText">—</strong></div>
+      <div class="progress"><div id="progressFill"></div></div>
+    </section>
+
+    <section class="grid-two">
+      <div class="panel">
+        <h2>Severity Distribution</h2>
+        <div id="severityChart" class="bars empty">No findings yet.</div>
+      </div>
+      <div class="panel">
+        <h2>Risk Composition</h2>
+        <div id="composition" class="composition"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="row">
+        <h2>Endpoint-wise Findings</h2>
+        <span id="targetLabel" class="muted"></span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Severity</th><th>Endpoint</th><th>Method</th><th>Vulnerability</th><th>Confidence</th></tr></thead>
+          <tbody id="findingsTable"><tr><td colspan="5" class="empty">No findings yet.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>API Sentinel • FastAPI backend + HTML/CSS/JavaScript frontend</footer>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

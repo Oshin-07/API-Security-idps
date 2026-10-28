@@ -1,0 +1,95 @@
+{
+    "api_url": "http://127.0.0.1:8001/openapi.json",
+    "title": "Demo E-Commerce API",
+    "version": "1.0.0",
+    "endpoints": [
+        {
+            "path": "/users",
+            "method": "GET",
+            "parameters": [],
+            "authentication": null
+        },
+        {
+            "path": "/users",
+            "method": "POST",
+            "parameters": [
+                {
+                    "name": "name",
+                    "location": "body",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "email",
+                    "location": "body",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "age",
+                    "location": "body",
+                    "type": "integer",
+                    "required": true
+                }
+            ],
+            "authentication": "HTTPBearer (bearer)"
+        },
+        {
+            "path": "/users/{user_id}",
+            "method": "GET",
+            "parameters": [
+                {
+                    "name": "user_id",
+                    "location": "path",
+                    "type": "integer",
+                    "required": true
+                }
+            ],
+            "authentication": "HTTPBearer (bearer)"
+        },
+        {
+            "path": "/users/{user_id}",
+            "method": "PUT",
+            "parameters": [
+                {
+                    "name": "user_id",
+                    "location": "path",
+                    "type": "integer",
+                    "required": true
+                },
+                {
+                    "name": "name",
+                    "location": "body",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "email",
+                    "location": "body",
+                    "type": "string",
+                    "required": true
+                },
+                {
+                    "name": "age",
+                    "location": "body",
+                    "type": "integer",
+                    "required": true
+                }
+            ],
+            "authentication": "HTTPBearer (bearer)"
+        },
+        {
+            "path": "/users/{user_id}",
+            "method": "DELETE",
+            "parameters": [
+                {
+                    "name": "user_id",
+                    "location": "path",
+                    "type": "integer",
+                    "required": true
+                }
+            ],
+            "authentication": "HTTPBearer (bearer)"
+        }
+    ]
+}
