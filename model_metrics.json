@@ -1,0 +1,103 @@
+{
+  "test_accuracy": 0.88,
+  "cv_mean_accuracy": 0.884,
+  "cv_std_accuracy": 0.0118,
+  "cv_fold_scores": [
+    0.9,
+    0.8733,
+    0.8733,
+    0.8967,
+    0.8767
+  ],
+  "train_samples": 1200,
+  "test_samples": 300,
+  "total_samples": 1500,
+  "class_order": [
+    "Critical",
+    "High",
+    "Medium",
+    "Low"
+  ],
+  "confusion_matrix": [
+    [
+      95,
+      17,
+      0,
+      0
+    ],
+    [
+      2,
+      113,
+      2,
+      0
+    ],
+    [
+      0,
+      11,
+      52,
+      2
+    ],
+    [
+      0,
+      1,
+      1,
+      4
+    ]
+  ],
+  "classification_report": {
+    "Critical": {
+      "precision": 0.979381443298969,
+      "recall": 0.8482142857142857,
+      "f1-score": 0.9090909090909091,
+      "support": 112.0
+    },
+    "High": {
+      "precision": 0.795774647887324,
+      "recall": 0.9658119658119658,
+      "f1-score": 0.8725868725868726,
+      "support": 117.0
+    },
+    "Low": {
+      "precision": 0.6666666666666666,
+      "recall": 0.6666666666666666,
+      "f1-score": 0.6666666666666666,
+      "support": 6.0
+    },
+    "Medium": {
+      "precision": 0.9454545454545454,
+      "recall": 0.8,
+      "f1-score": 0.8666666666666667,
+      "support": 65.0
+    },
+    "accuracy": 0.88,
+    "macro avg": {
+      "precision": 0.8468193258268762,
+      "recall": 0.8201732295482296,
+      "f1-score": 0.8287527787527788,
+      "support": 300.0
+    },
+    "weighted avg": {
+      "precision": 0.8941696696894896,
+      "recall": 0.88,
+      "f1-score": 0.8808139308139308,
+      "support": 300.0
+    }
+  },
+  "top_feature_importance": {
+    "data_exposure_risk": 0.22600190634499345,
+    "vuln_type=Missing_Security_Headers": 0.19671471723068307,
+    "endpoint_sensitivity": 0.10534705403455794,
+    "attack_confidence": 0.10309174731910213,
+    "vuln_type=SQL_Injection": 0.10297938527528981,
+    "vuln_type=Broken_Authentication": 0.09369441808624726,
+    "vuln_type=Reflected_XSS": 0.059452724199113044,
+    "vuln_type=Missing_Rate_Limiting": 0.05074308372563584,
+    "vuln_type=IDOR": 0.03304734581267641,
+    "auth_required": 0.028927617971701104
+  },
+  "model_params": {
+    "n_estimators": 200,
+    "max_depth": 10,
+    "min_samples_leaf": 3
+  }
+}

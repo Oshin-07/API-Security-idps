@@ -1,0 +1,151 @@
+{
+  "target_url": "http://127.0.0.1:5000",
+  "discovery": {
+    "api_info": {
+      "title": "Intentionally Vulnerable College Test API",
+      "version": "1.0.0",
+      "description": "Target API for Security Scanner Testing (OWASP Top 10 API Security)"
+    },
+    "base_url": "http://127.0.0.1:5000",
+    "total_endpoints": 6,
+    "endpoints": [
+      {
+        "path": "/api/health",
+        "method": "GET",
+        "summary": "Public Health Check",
+        "operation_id": "GET_/api/health",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/users/search",
+        "method": "GET",
+        "summary": "Search user accounts (Vulnerable to SQLi)",
+        "operation_id": "GET_/api/users/search",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/comments",
+        "method": "POST",
+        "summary": "Post user comment (Vulnerable to XSS)",
+        "operation_id": "POST_/api/comments",
+        "parameters": [],
+        "body_schema": {
+          "content_type": "application/json",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "comment": {
+              "type": "string"
+            }
+          },
+          "required_fields": [
+            "username",
+            "comment"
+          ]
+        },
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/admin/dashboard",
+        "method": "GET",
+        "summary": "Administrative metrics (Vulnerable to Broken Authentication)",
+        "operation_id": "GET_/api/admin/dashboard",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": true,
+        "auth_types": [
+          {
+            "scheme": "BearerAuth",
+            "type": "http",
+            "in": "header"
+          }
+        ]
+      },
+      {
+        "path": "/api/profile/{user_id}",
+        "method": "GET",
+        "summary": "Fetch User Profile by ID (Vulnerable to IDOR)",
+        "operation_id": "GET_/api/profile/{user_id}",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "body_schema": {},
+        "auth_required": true,
+        "auth_types": [
+          {
+            "scheme": "BearerAuth",
+            "type": "http",
+            "in": "header"
+          }
+        ]
+      },
+      {
+        "path": "/api/login",
+        "method": "POST",
+        "summary": "User authentication endpoint (Vulnerable to Missing Rate Limiting)",
+        "operation_id": "POST_/api/login",
+        "parameters": [],
+        "body_schema": {
+          "content_type": "application/json",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          },
+          "required_fields": []
+        },
+        "auth_required": false,
+        "auth_types": []
+      }
+    ]
+  },
+  "scan": {
+    "target_url": "http://127.0.0.1:5000",
+    "scan_duration_seconds": 186.92,
+    "total_vulnerabilities": 0,
+    "findings": []
+  },
+  "assessment": {
+    "overall_risk_score": 0.0,
+    "threat_level": "LOW",
+    "cvss_base_score": 0.0,
+    "total_findings": 0,
+    "severity_breakdown": {
+      "Critical": 0,
+      "High": 0,
+      "Medium": 0,
+      "Low": 0
+    },
+    "enriched_findings": [],
+    "adaptive_attack_plan": {
+      "total_adaptive_plans": 0,
+      "adaptive_attack_plans": []
+    },
+    "executive_summary": "EXECUTIVE SECURITY ASSESSMENT SUMMARY:\n- Overall System Risk Score: 0.0/100 (LOW)\n- Estimated CVSS Base Score: 0.0/10.0\n- Total Detected Vulnerabilities: 0\n  * Critical: 0\n  * High:     0\n  * Medium:   0\n  * Low:      0\n\nKey Takeaway: The target API exhibits 0 critical vulnerabilities that require immediate mitigation before production release."
+  }
+}

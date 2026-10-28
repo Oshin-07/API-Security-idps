@@ -1,0 +1,283 @@
+{
+  "target_url": "http://127.0.0.1:8888/api/users/search?query=alice",
+  "discovery_summary": {
+    "api_title": "Heuristically Probed API",
+    "endpoints_found": 7,
+    "endpoints": [
+      {
+        "path": "/api/health",
+        "method": "GET",
+        "summary": "Discovered via active probe (Status 200)",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/users",
+        "method": "GET",
+        "summary": "Discovered via active probe (Status 200)",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/users/search",
+        "method": "GET",
+        "summary": "Discovered via active probe (Status 200)",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/comments",
+        "method": "POST",
+        "summary": "Discovered via active probe (Status 405)",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/login",
+        "method": "POST",
+        "summary": "Discovered via active probe (Status 405)",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/admin",
+        "method": "GET",
+        "summary": "Discovered via active probe (Status 200)",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      },
+      {
+        "path": "/api/profile/101",
+        "method": "GET",
+        "summary": "Discovered via active probe (Status 200)",
+        "parameters": [],
+        "body_schema": {},
+        "auth_required": false,
+        "auth_types": []
+      }
+    ]
+  },
+  "vulnerability_scan": {
+    "duration_seconds": 0.5,
+    "total_detected": 6
+  },
+  "risk_assessment": {
+    "overall_risk_score": 83.1,
+    "threat_level": "CRITICAL",
+    "cvss_base_score": 9.3,
+    "total_findings": 6,
+    "severity_breakdown": {
+      "Critical": 1,
+      "High": 1,
+      "Medium": 4,
+      "Low": 0
+    },
+    "enriched_findings": [
+      {
+        "id": "VULN-001",
+        "vulnerability_type": "Missing Security Header",
+        "original_severity": "Medium",
+        "ml_predicted_severity": "Medium",
+        "endpoint": "/",
+        "method": "GET",
+        "parameter": "Strict-Transport-Security",
+        "payload_used": "Passive Header Inspection",
+        "confidence": 0.99,
+        "factors": {
+          "endpoint_sensitivity_score": 2,
+          "data_exposure_score": 3,
+          "auth_requirement_factor": 0
+        },
+        "explanation": {
+          "finding_id": "VULN-001",
+          "vulnerability_type": "Missing Security Header",
+          "severity": "Medium",
+          "endpoint": "GET /",
+          "cwe_reference": "CWE-1021 / CWE-319 (Security Misconfiguration)",
+          "owasp_category": "OWASP API8:2023 Security Misconfiguration",
+          "technical_description": "The API server omits industry-standard defensive HTTP response headers (such as HSTS, CSP, X-Frame-Options, and X-Content-Type-Options).",
+          "attack_impact": "Leaves client browsers vulnerable to protocol downgrade attacks, Clickjacking, MIME-type sniffing, and cross-site scripting exploitation.",
+          "remediation_guidance": "Configure web server (Nginx/Apache) or application middleware to return defensive security headers on all responses.",
+          "secure_code_example": "# Recommended Headers:\nStrict-Transport-Security: max-age=31536000; includeSubDomains\nContent-Security-Policy: default-src 'self'\nX-Frame-Options: DENY\nX-Content-Type-Options: nosniff"
+        }
+      },
+      {
+        "id": "VULN-002",
+        "vulnerability_type": "Missing Security Header",
+        "original_severity": "Medium",
+        "ml_predicted_severity": "Medium",
+        "endpoint": "/",
+        "method": "GET",
+        "parameter": "Content-Security-Policy",
+        "payload_used": "Passive Header Inspection",
+        "confidence": 0.99,
+        "factors": {
+          "endpoint_sensitivity_score": 2,
+          "data_exposure_score": 1,
+          "auth_requirement_factor": 0
+        },
+        "explanation": {
+          "finding_id": "VULN-002",
+          "vulnerability_type": "Missing Security Header",
+          "severity": "Medium",
+          "endpoint": "GET /",
+          "cwe_reference": "CWE-1021 / CWE-319 (Security Misconfiguration)",
+          "owasp_category": "OWASP API8:2023 Security Misconfiguration",
+          "technical_description": "The API server omits industry-standard defensive HTTP response headers (such as HSTS, CSP, X-Frame-Options, and X-Content-Type-Options).",
+          "attack_impact": "Leaves client browsers vulnerable to protocol downgrade attacks, Clickjacking, MIME-type sniffing, and cross-site scripting exploitation.",
+          "remediation_guidance": "Configure web server (Nginx/Apache) or application middleware to return defensive security headers on all responses.",
+          "secure_code_example": "# Recommended Headers:\nStrict-Transport-Security: max-age=31536000; includeSubDomains\nContent-Security-Policy: default-src 'self'\nX-Frame-Options: DENY\nX-Content-Type-Options: nosniff"
+        }
+      },
+      {
+        "id": "VULN-003",
+        "vulnerability_type": "Missing Security Header",
+        "original_severity": "Low",
+        "ml_predicted_severity": "Medium",
+        "endpoint": "/",
+        "method": "GET",
+        "parameter": "X-Frame-Options",
+        "payload_used": "Passive Header Inspection",
+        "confidence": 0.99,
+        "factors": {
+          "endpoint_sensitivity_score": 2,
+          "data_exposure_score": 1,
+          "auth_requirement_factor": 0
+        },
+        "explanation": {
+          "finding_id": "VULN-003",
+          "vulnerability_type": "Missing Security Header",
+          "severity": "Medium",
+          "endpoint": "GET /",
+          "cwe_reference": "CWE-1021 / CWE-319 (Security Misconfiguration)",
+          "owasp_category": "OWASP API8:2023 Security Misconfiguration",
+          "technical_description": "The API server omits industry-standard defensive HTTP response headers (such as HSTS, CSP, X-Frame-Options, and X-Content-Type-Options).",
+          "attack_impact": "Leaves client browsers vulnerable to protocol downgrade attacks, Clickjacking, MIME-type sniffing, and cross-site scripting exploitation.",
+          "remediation_guidance": "Configure web server (Nginx/Apache) or application middleware to return defensive security headers on all responses.",
+          "secure_code_example": "# Recommended Headers:\nStrict-Transport-Security: max-age=31536000; includeSubDomains\nContent-Security-Policy: default-src 'self'\nX-Frame-Options: DENY\nX-Content-Type-Options: nosniff"
+        }
+      },
+      {
+        "id": "VULN-004",
+        "vulnerability_type": "Missing Security Header",
+        "original_severity": "Low",
+        "ml_predicted_severity": "Medium",
+        "endpoint": "/",
+        "method": "GET",
+        "parameter": "X-Content-Type-Options",
+        "payload_used": "Passive Header Inspection",
+        "confidence": 0.99,
+        "factors": {
+          "endpoint_sensitivity_score": 2,
+          "data_exposure_score": 1,
+          "auth_requirement_factor": 0
+        },
+        "explanation": {
+          "finding_id": "VULN-004",
+          "vulnerability_type": "Missing Security Header",
+          "severity": "Medium",
+          "endpoint": "GET /",
+          "cwe_reference": "CWE-1021 / CWE-319 (Security Misconfiguration)",
+          "owasp_category": "OWASP API8:2023 Security Misconfiguration",
+          "technical_description": "The API server omits industry-standard defensive HTTP response headers (such as HSTS, CSP, X-Frame-Options, and X-Content-Type-Options).",
+          "attack_impact": "Leaves client browsers vulnerable to protocol downgrade attacks, Clickjacking, MIME-type sniffing, and cross-site scripting exploitation.",
+          "remediation_guidance": "Configure web server (Nginx/Apache) or application middleware to return defensive security headers on all responses.",
+          "secure_code_example": "# Recommended Headers:\nStrict-Transport-Security: max-age=31536000; includeSubDomains\nContent-Security-Policy: default-src 'self'\nX-Frame-Options: DENY\nX-Content-Type-Options: nosniff"
+        }
+      },
+      {
+        "id": "VULN-005",
+        "vulnerability_type": "Missing Rate Limiting",
+        "original_severity": "Medium",
+        "ml_predicted_severity": "High",
+        "endpoint": "/api/login",
+        "method": "POST",
+        "parameter": "Request Bursting",
+        "payload_used": "15 rapid consecutive requests",
+        "confidence": 0.88,
+        "factors": {
+          "endpoint_sensitivity_score": 5,
+          "data_exposure_score": 3,
+          "auth_requirement_factor": 0
+        },
+        "explanation": {
+          "finding_id": "VULN-005",
+          "vulnerability_type": "Missing Rate Limiting",
+          "severity": "High",
+          "endpoint": "POST /api/login",
+          "cwe_reference": "CWE-799 (Improper Control of Generation of Code or Resource Consumption)",
+          "owasp_category": "OWASP API4:2023 Unrestricted Resource Consumption",
+          "technical_description": "The API does not restrict the number of incoming requests within a given timeframe, allowing unrestricted request bursts.",
+          "attack_impact": "Enables brute-force credential stuffing, API denial of service (DoS), resource exhaustion, and automated credential scraping.",
+          "remediation_guidance": "Implement token-bucket or sliding-window rate limiting (e.g., using Redis or SlowAPI in FastAPI) returning HTTP 429 Too Many Requests.",
+          "secure_code_example": "# SECURE (Using SlowAPI Rate Limiter in FastAPI):\nfrom slowapi import Limiter\nfrom slowapi.util import get_remote_address\n\nlimiter = Limiter(key_func=get_remote_address)\n@app.post('/api/login')\n@limiter.limit('5/minute')\ndef login():\n    ..."
+        }
+      },
+      {
+        "id": "VULN-006",
+        "vulnerability_type": "Broken Authentication",
+        "original_severity": "Critical",
+        "ml_predicted_severity": "Critical",
+        "endpoint": "/api/admin",
+        "method": "GET",
+        "parameter": "Authorization Header",
+        "payload_used": "Token: None (Missing Header)",
+        "confidence": 0.96,
+        "factors": {
+          "endpoint_sensitivity_score": 5,
+          "data_exposure_score": 1,
+          "auth_requirement_factor": 1
+        },
+        "explanation": {
+          "finding_id": "VULN-006",
+          "vulnerability_type": "Broken Authentication",
+          "severity": "Critical",
+          "endpoint": "GET /api/admin",
+          "cwe_reference": "CWE-287 (Improper Authentication)",
+          "owasp_category": "OWASP API2:2023 Broken Authentication",
+          "technical_description": "The API fails to strictly enforce, validate, or verify authentication tokens on protected endpoints.",
+          "attack_impact": "Unauthenticated attackers can access sensitive administrative interfaces, leak configuration details, and compromise the entire backend infrastructure.",
+          "remediation_guidance": "Enforce mandatory authentication verification via middleware/dependency injection. Validate cryptographic signatures and expiration of JWT tokens on every request.",
+          "secure_code_example": "# SECURE (FastAPI Dependency Enforcement):\nfrom fastapi import Depends, HTTPException, status\nfrom fastapi.security import HTTPBearer\n\nsecurity = HTTPBearer()\n\ndef verify_token(credentials = Depends(security)):\n    token = credentials.credentials\n    if not validate_jwt(token):\n        raise HTTPException(status_code=401, detail='Invalid or missing token')\n    return get_current_user(token)"
+        }
+      }
+    ],
+    "adaptive_attack_plan": {
+      "total_adaptive_plans": 1,
+      "adaptive_attack_plans": [
+        {
+          "endpoint": "/api/admin",
+          "method": "GET",
+          "attack_phase": "Token Manipulation & Privilege Escalation",
+          "target_db": "N/A",
+          "strategy": "Algorithm Confusion & Header Injection",
+          "adaptive_payloads": [
+            "Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJzdWIiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiJ9.",
+            "Bearer invalid.signature.spoof",
+            "Bearer null"
+          ],
+          "rationale": "Endpoint lacks token enforcement; testing JWT 'none' algorithm bypass and privilege escalation."
+        }
+      ]
+    },
+    "executive_summary": "EXECUTIVE SECURITY ASSESSMENT SUMMARY:\n- Overall System Risk Score: 83.1/100 (CRITICAL)\n- Estimated CVSS Base Score: 9.3/10.0\n- Total Detected Vulnerabilities: 6\n  * Critical: 1\n  * High:     1\n  * Medium:   4\n  * Low:      0\n\nKey Takeaway: The target API exhibits 1 critical vulnerabilities that require immediate mitigation before production release."
+  }
+}

